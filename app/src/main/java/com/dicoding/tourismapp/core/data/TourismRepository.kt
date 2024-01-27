@@ -9,25 +9,11 @@ import com.dicoding.tourismapp.core.domain.repository.*
 import com.dicoding.tourismapp.core.utils.*
 import kotlinx.coroutines.flow.*
 
-class TourismRepository private constructor(
+class TourismRepository(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource,
     private val appExecutors: AppExecutors
 ) : ITourismRepository {
-
-    companion object {
-        @Volatile
-        private var instance: TourismRepository? = null
-
-        fun getInstance(
-            remoteData: RemoteDataSource,
-            localData: LocalDataSource,
-            appExecutors: AppExecutors
-        ): TourismRepository =
-            instance ?: synchronized(this) {
-                instance ?: TourismRepository(remoteData, localData, appExecutors)
-            }
-    }
 
     override fun getAllTourism(): Flow<Resource<List<Tourism>>> =
         object : NetworkBoundResource<List<Tourism>, List<TourismResponse>>() {

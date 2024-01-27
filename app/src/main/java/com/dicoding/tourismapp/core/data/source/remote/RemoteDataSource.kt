@@ -7,16 +7,7 @@ import com.dicoding.tourismapp.core.data.source.remote.response.*
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
-class RemoteDataSource private constructor(private val apiService: ApiService) {
-    companion object {
-        @Volatile
-        private var instance: RemoteDataSource? = null
-
-        fun getInstance(service: ApiService): RemoteDataSource =
-            instance ?: synchronized(this) {
-                instance ?: RemoteDataSource(service)
-            }
-    }
+class RemoteDataSource(private val apiService: ApiService) {
 
     @SuppressLint("CheckResult")
     fun getAllTourism(): Flow<ApiResponse<List<TourismResponse>>> {
